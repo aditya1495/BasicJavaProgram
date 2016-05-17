@@ -1,12 +1,11 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class GridGame {
 
     private void play() {
-        Grid myGrid = new Grid();
-        myGrid.initGrid(5);
+        Grid myGrid = new Grid(5);
         Scanner sc = new Scanner(System.in);
-        while (myGrid.hasReached() == false) {
+        while (!myGrid.hasReached()) {
             char c = sc.next().charAt(0);
             if (c == 'U') {
                 myGrid.moveUp();
