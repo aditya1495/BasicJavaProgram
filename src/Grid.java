@@ -3,13 +3,14 @@ import java.util.Arrays;
 public class Grid {
 
     // Set of valid movement direction on 2D grid
-    final static int dx[] = {1, -1, 0, 0};
-    final static int dy[] = {0, 0, 1, -1};
+    final static int dx[] = {-1, +1, 0, 0};
+    final static int dy[] = {0, 0, +1, -1};
 
-    private int X, Y, size;
+    private int X, Y, size, health;
     private int[][] board;
 
     public Grid(int size) {
+        this.health = 10;
         this.size = size;
         this.board = new int[size][size];
         System.out.println(size);
@@ -42,26 +43,31 @@ public class Grid {
             System.out.println("Moving to: " + nx + " " + ny);
         } else {
             System.out.println("Invalid / Out of bound cell detected");
+            if (--this.health == 0) System.out.println("Players died.");
         }
     }
 
-    public void moveUp() {
+    public boolean moveUp() {
         this.move(0);
+        return hasReached();
     }
 
-    public void moveDown() {
+    public boolean moveDown() {
         this.move(1);
+        return hasReached();
     }
 
-    public void moveRight() {
+    public boolean moveRight() {
         this.move(2);
+        return hasReached();
     }
 
-    public void moveLeft() {
+    public boolean moveLeft() {
         this.move(3);
+        return hasReached();
     }
 
-    public boolean hasReached() {
-        return (this.X == this.size - 1 && this.Y == this.size - 1);
+    private boolean hasReached() {
+        return (this.X == this.size - 1 && this.Y == this.size - 1) || (this.health == 0);
     }
 }
