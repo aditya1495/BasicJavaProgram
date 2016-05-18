@@ -47,9 +47,7 @@ public class Grid {
         }
     }
 
-    //Yemp:
-
-    public boolean moveUp() {
+    public void moveUp() {
         this.move(0);
         return hasReached();
     }
