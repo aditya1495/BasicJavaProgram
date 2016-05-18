@@ -47,7 +47,7 @@ public class Grid {
         }
     }
 
-    public void moveUp() {
+    public boolean moveUp() {
         this.move(0);
         return hasReached();
     }
