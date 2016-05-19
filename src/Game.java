@@ -11,26 +11,24 @@ public class Game {
     }
 
     public void play() {
-        int nx, ny, vec = 0;
         boolean alive = true;
         boolean reached = false;
         Scanner sc = new Scanner(System.in);
         while (alive && !reached) {
             char dir = sc.next().charAt(0);
+            Position newPos = new Position(0, 0);
+            if (dir == 'U') newPos = myPlayer.move(Direction.UP);
+            if (dir == 'D') newPos = myPlayer.move(Direction.DOWN);
+            if (dir == 'R') newPos = myPlayer.move(Direction.RIGHT);
+            if (dir == 'L') newPos = myPlayer.move(Direction.LEFT);
 
-            if (dir == 'U') vec = 0;
-            if (dir == 'D') vec = 1;
-            if (dir == 'R') vec = 2;
-            if (dir == 'L') vec = 3;
+            Move myMove = myGrid.isValid(newPos);
 
-            nx = myPlayer.X; nx += myPlayer.dx[vec];
-            ny = myPlayer.Y; ny += myPlayer.dy[vec];
-
-            Move myMove = myGrid.isValid(nx, ny);
+            System.out.println(newPos + " " + myMove);
 
             switch (myMove) {
                 case VALID:
-                    myPlayer.updatePosition(nx, ny);
+                    myPlayer.updatePosition(newPos);
                     break;
 
                 case OUTOFBOUND:
@@ -40,8 +38,8 @@ public class Game {
                     alive = myPlayer.hitWallEffect();
                     break;
             }
-            reached = myGrid.hasReached(myPlayer.X, myPlayer.Y);
-            System.out.println(myPlayer.X + " " + myPlayer.Y);
+            reached = myGrid.hasReached(myPlayer.position);
+            System.out.println(myPlayer.position);
         }
 
         if (reached)

@@ -1,12 +1,13 @@
-import java.util.Arrays;
 
 public class Grid {
 
     private int rowSize, colSize;
     private Cell[][] board;
+    private Position destination;
 
     private void initBoard() {
         int rows = this.rowSize, cols = this.colSize;
+        destination = new Position(rows - 1, cols - 1);
         this.board = new Cell[rows][cols];
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
@@ -33,13 +34,15 @@ public class Grid {
         return Math.random() > 0.5 ? 0 : 1;
     }
 
-    public Move isValid(int nx, int ny) {
+    public Move isValid(Position pos) {
+        int nx = pos.X;
+        int ny = pos.Y;
         if (nx < 0 || ny < 0 || nx >= this.rowSize || ny >= this.colSize) return Move.OUTOFBOUND;
         if (board[nx][ny].isBlocked) return Move.HITWALL;
         return Move.VALID;
     }
 
-    public boolean hasReached(int nx, int ny) {
-        return nx == this.rowSize - 1 && ny == this.colSize - 1;
+    public boolean hasReached(Position curPos) {
+        return (curPos.X == destination.X && curPos.Y == destination.Y);
     }
 }
